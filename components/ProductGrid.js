@@ -1,11 +1,11 @@
-import { Grid, GridItem } from '@chakra-ui/react';
-import { calcLength } from 'framer-motion';
+import { Button, Grid, GridItem } from '@chakra-ui/react';
 import { useAtom } from 'jotai';
-import { productsAtom } from '../utils/atoms';
+import { productsAtom, storeAtom } from '../utils/atoms';
 import Card from './Card';
 
 const ProductGrid = () => {
   const [products] = useAtom(productsAtom);
+  const [, setStore] = useAtom(storeAtom);
 
   return (
     <Grid
@@ -25,6 +25,13 @@ const ProductGrid = () => {
                 src={product.product.images[0]}
                 name={product.product.name}
               />
+              <Button
+                colorScheme="teal"
+                size="sm"
+                onClick={() => setStore((prev) => [...prev, product])}
+              >
+                Add to cart
+              </Button>
             </GridItem>
           );
         })}
