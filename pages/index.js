@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { productsAtom, storeAtom } from '../utils/atoms';
+import { cartAtom, productsAtom, storeAtom } from '../utils/atoms';
 import Stripe from 'stripe';
 import { useEffect } from 'react';
 
@@ -8,15 +8,16 @@ import { Box } from '@chakra-ui/react';
 import Layout from '../components/Layout';
 
 import ProductGrid from '../components/ProductGrid';
+import Cart from '../components/Cart';
 
 export default function Home({ prices }) {
   const [, setProducts] = useAtom(productsAtom);
-  const [store] = useAtom(storeAtom);
+  const [cart] = useAtom(cartAtom);
 
   useEffect(() => {
     setProducts(prices);
   });
-  console.log('store', store);
+  console.log('cart', cart);
   return (
     <Box w="100vw" h="100vh" display="flex" justifyContent="center">
       <Head>
@@ -27,6 +28,7 @@ export default function Home({ prices }) {
       <Layout>
         <ProductGrid />
       </Layout>
+      <Cart />
     </Box>
   );
 }
