@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { cartAtom, productsAtom, storeAtom } from '../utils/atoms';
+import { productsAtom } from '../utils/atoms';
 import Stripe from 'stripe';
 import { useEffect } from 'react';
 
@@ -12,12 +12,11 @@ import Cart from '../components/Cart';
 
 export default function Home({ prices }) {
   const [, setProducts] = useAtom(productsAtom);
-  const [cart] = useAtom(cartAtom);
 
   useEffect(() => {
     setProducts(prices);
   });
-  console.log('cart', cart);
+
   return (
     <Box w="100vw" h="100vh" display="flex" justifyContent="center">
       <Head>

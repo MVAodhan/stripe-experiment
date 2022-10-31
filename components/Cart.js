@@ -6,14 +6,22 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Input,
   Button,
 } from '@chakra-ui/react';
 import { useAtom } from 'jotai';
 import { isCartOpenAtom } from '../utils/atoms';
+import { cartAtom } from '../utils/atoms';
+import { checkout } from '../utils/checkout';
+
+import CartCard from './CartCard';
 
 const Cart = () => {
+  const [cart] = useAtom(cartAtom);
+  const handleCheckout = () => {
+    checkout(cart);
+  };
   const [isCartOpen, setIsCartOpen] = useAtom(isCartOpenAtom);
+  console.log('cart from cart component', cart);
   return (
     <>
       <Drawer
@@ -24,21 +32,23 @@ const Cart = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
+          <DrawerHeader>Your Cart</DrawerHeader>
 
           <DrawerBody>
-            <Input placeholder="Type here..." />
+            {cart &&
+              cart.map((item) => (
+                <CartCard
+                  key={item.id}
+                  src={item.product.images[0]}
+                  name={item.product.name}
+                />
+              ))}
           </DrawerBody>
 
           <DrawerFooter>
-            <Button
-              variant="outline"
-              mr={3}
-              onClick={() => setIsCartOpen((prev) => !prev)}
-            >
-              Cancel
+            <Button colorScheme="teal" onClick={handleCheckout}>
+              Checkout
             </Button>
-            <Button colorScheme="blue">Save</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
